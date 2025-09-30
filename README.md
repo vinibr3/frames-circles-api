@@ -50,3 +50,7 @@ Once the api is running you can check the health of your them through the url `h
 sudo chown -R $(whoami):$(whoami) .docker
 sudo chmod -R 755 .docker
 sudo chown -R 999:999 .docker/pgsql-data/
+
+# Docs
+
+Documentations available on `http://localhost:3013/api-docs/index.html`
