@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_30_190107) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_30_202809) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -34,7 +34,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_30_190107) do
     t.box "geometry", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "highest_circle_id"
+    t.bigint "lowest_circle_id"
+    t.bigint "rightest_circle_id"
+    t.bigint "leftest_circle_id"
+    t.integer "circles_count", default: 0, null: false
+    t.index ["highest_circle_id"], name: "index_frames_on_highest_circle_id"
+    t.index ["leftest_circle_id"], name: "index_frames_on_leftest_circle_id"
+    t.index ["lowest_circle_id"], name: "index_frames_on_lowest_circle_id"
+    t.index ["rightest_circle_id"], name: "index_frames_on_rightest_circle_id"
   end
 
   add_foreign_key "circles", "frames"
+  add_foreign_key "frames", "circles", column: "highest_circle_id"
+  add_foreign_key "frames", "circles", column: "leftest_circle_id"
+  add_foreign_key "frames", "circles", column: "lowest_circle_id"
+  add_foreign_key "frames", "circles", column: "rightest_circle_id"
 end

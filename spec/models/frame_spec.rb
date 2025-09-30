@@ -17,7 +17,11 @@ RSpec.describe Frame, type: :model do
   it { is_expected.to validate_numericality_of(:y) }
   it { is_expected.to validate_numericality_of(:width) }
   it { is_expected.to validate_numericality_of(:height) }
-  it { is_expected.to have_many(:circles) }
+  it { is_expected.to have_many(:circles).dependent(:destroy) }
+  it { is_expected.to belong_to(:highest_circle).class_name('Circle').optional }
+  it { is_expected.to belong_to(:lowest_circle).class_name('Circle').optional }
+  it { is_expected.to belong_to(:rightest_circle).class_name('Circle').optional }
+  it { is_expected.to belong_to(:leftest_circle).class_name('Circle').optional }
 
   context 'before validation' do
     let(:frame) { build(:frame, geometry: nil) }
@@ -31,5 +35,14 @@ RSpec.describe Frame, type: :model do
 
       expect{ frame.valid? }.to change { frame.geometry }.to(geometry)
     end
+  end
+
+  context 'when frame has circles' do
+    subject { create(:circle).frame }
+
+    it { is_expected.to validate_presence_of(:highest_circle) }
+    it { is_expected.to validate_presence_of(:lowest_circle) }
+    it { is_expected.to validate_presence_of(:rightest_circle) }
+    it { is_expected.to validate_presence_of(:leftest_circle) }
   end
 end

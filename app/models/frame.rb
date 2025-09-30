@@ -1,5 +1,14 @@
 class Frame < ApplicationRecord
-  has_many :circles
+  belongs_to :highest_circle, class_name: 'Circle',
+                              optional: true
+  belongs_to :lowest_circle, class_name: 'Circle',
+                             optional: true
+  belongs_to :rightest_circle, class_name: 'Circle',
+                               optional: true
+  belongs_to :leftest_circle, class_name: 'Circle',
+                              optional: true
+
+  has_many :circles, dependent: :destroy
 
   before_validation :assigns_attribute_geometry_with_oposits_vertexs_of_frame
 
@@ -12,6 +21,14 @@ class Frame < ApplicationRecord
   validates :height, presence: true,
                      numericality: true
   validates :geometry, presence: true
+  validates :highest_circle, presence: true,
+                             if: proc { circles_count.positive? }
+  validates :lowest_circle, presence: true,
+                             if: proc { circles_count.positive? }
+  validates :rightest_circle, presence: true,
+                             if: proc { circles_count.positive? }
+  validates :leftest_circle, presence: true,
+                             if: proc { circles_count.positive? }
 
   private
 

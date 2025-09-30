@@ -16,6 +16,10 @@ pt-BR:
         width: Largura
         height: Altura
         geometry: Representação geométrica
+        highest_circle: Círculo mais acima
+        lowest_circle: Círculo mais abaixo
+        rightest_circle: Círculo mais a direita
+        leftest_circle: Círculo mais a esquerda
         created_at: Data de Criação
         updated_at: Data de Atualização
       circle:

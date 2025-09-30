@@ -1,5 +1,5 @@
 class Circle < ApplicationRecord
-  belongs_to :frame
+  belongs_to :frame, counter_cache: true
 
   before_validation :assigns_attributes
 
