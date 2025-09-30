@@ -1,4 +1,6 @@
 class Frame < ApplicationRecord
+  has_many :circles
+
   before_validation :assigns_attribute_geometry_with_oposits_vertexs_of_frame
 
   validates :x, presence: true,

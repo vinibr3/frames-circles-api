@@ -17,6 +17,7 @@ RSpec.describe Frame, type: :model do
   it { is_expected.to validate_numericality_of(:y) }
   it { is_expected.to validate_numericality_of(:width) }
   it { is_expected.to validate_numericality_of(:height) }
+  it { is_expected.to have_many(:circles) }
 
   context 'before validation' do
     let(:frame) { build(:frame, geometry: nil) }

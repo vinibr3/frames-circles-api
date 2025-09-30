@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_30_172604) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_30_190107) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "circles", force: :cascade do |t|
+    t.bigint "frame_id", null: false
+    t.decimal "x", null: false
+    t.decimal "y", null: false
+    t.decimal "radius", null: false
+    t.decimal "diameter", null: false
+    t.circle "geometry", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["frame_id"], name: "index_circles_on_frame_id"
+  end
 
   create_table "frames", force: :cascade do |t|
     t.decimal "x", null: false
@@ -23,4 +35,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_30_172604) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "circles", "frames"
 end

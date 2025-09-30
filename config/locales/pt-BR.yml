@@ -7,13 +7,22 @@ pt-BR:
           has_one: Não é possível excluir o registro pois existe um %{record} dependente
           has_many: Não é possível excluir o registro pois existem %{record} dependentes
     models:
-      frame: Perfil
+      frame: Quadro
+      circle: Circulo
     attributes:
-      profile:
+      frame:
         x: Ponto central no eixo x
         y: Ponto central no eixo y
         width: Largura
         height: Altura
+        geometry: Representação geométrica
+        created_at: Data de Criação
+        updated_at: Data de Atualização
+      circle:
+        x: Ponto central no eixo x
+        y: Ponto central no eixo y
+        radius: Raio
+        diameter: Diâmetro
         geometry: Representação geométrica
         created_at: Data de Criação
         updated_at: Data de Atualização
