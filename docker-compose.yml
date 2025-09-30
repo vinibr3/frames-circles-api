@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  db:
+    image: 'postgres:14'
+    ports:
+      - 5435:5435
+    expose:
+      - "5435"
+    environment:
+      POSTGRES_DB: "${DATABASE_NAME}"
+      POSTGRES_USER: "${DATABASE_USERNAME}"
+      POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"
+    command: -p 5435
+    volumes:
+      - ./.docker/pgsql-data:/var/lib/postgresql/data
+      - ./.docker/shared_db:/home
+      - ./docker-script/init.sql:/docker-entrypoint-initdb.d/init.sql
+    env_file: .env
+
+  api:
+    tty: true
+    stdin_open: true
+    build:
+      context: .
+    container_name: frames-circles-api
+    ports:
+      - '3013:3013'
+      - '8812:8812'
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - db
+    environment:
+      RAILS_ENV: '${RAILS_ENV}'
+    env_file: .env
