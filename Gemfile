@@ -36,12 +36,18 @@ gem "thruster", require: false
 # gem "rack-cors"
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem 'debug', platforms: %i[ mri windows ], require: 'debug/prelude'
+  gem 'brakeman', require: false
+  gem 'rubocop-rails-omakase', require: false
+  gem 'rspec', '~> 3.13', '>= 3.13.1'
+  gem 'rspec-rails', '~> 8.0.0'
+  gem 'faker'
+  gem 'factory_bot_rails'
+  gem 'spring'
+  gem 'yard'
+end
 
-  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem "brakeman", require: false
-
-  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem "rubocop-rails-omakase", require: false
+group :test do
+  gem 'simplecov', require: false
+  gem 'shoulda-matchers', require: false
 end
