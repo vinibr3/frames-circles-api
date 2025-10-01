@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :frames, only: %i[create] do
         resources :circles, only: %i[create], controller: 'frames/circles'
       end
+      resources :circles, only: %i[update]
     end
   end
 end

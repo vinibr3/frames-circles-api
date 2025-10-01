@@ -7,6 +7,9 @@ servers:
 
 paths:
   # Frames
+  "/api/v1/circles/{id}":
+    $ref: "./circles/update-destroy.yaml"
+  # Frames
   "/api/v1/frames":
     $ref: "./frames/listing-create.yaml"
   "/api/v1/frames/{frame_id}/circles":
