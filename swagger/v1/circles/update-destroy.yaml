@@ -69,3 +69,19 @@ put:
                 - 'Diâmetro não pode ficar em branco'
                 - 'Diâmetro não é um número'
                 - 'Representação geométrica não pode ficar em branco'
+
+delete:
+  summary: Delete a circle
+  tags:
+    - Circles
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      description: ID of circle to delete
+  responses:
+    "204":
+      description: No Content
+    "404":
+      description: Not found

@@ -39,4 +39,31 @@ RSpec.describe Api::V1::CirclesController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE destroy' do
+    let(:circle) { create(:circle) }
+
+    it 'delete circle' do
+      circle
+
+      expect{ delete :destroy, params: { id: circle.id } }
+        .to change { Circle.count }.by(-1)
+    end
+
+    it 'response have http status 204' do
+      delete :destroy, params: { id: circle.id }
+
+      expect(response).to have_http_status(:no_content)
+   end
+
+   context 'when do not destroy cirle' do
+     before { allow_any_instance_of(Circle).to receive(:destroy).and_return(false) }
+
+     it 'response have http status 404' do
+       delete :destroy, params: { id: circle.id }
+
+       expect(response).to have_http_status(:not_found)
+     end
+   end
+  end
 end

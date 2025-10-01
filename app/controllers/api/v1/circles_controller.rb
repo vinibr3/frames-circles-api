@@ -7,6 +7,13 @@ class Api::V1::CirclesController < ApplicationController
     render_errors(@circle) and return unless @circle.update(circle_params)
   end
 
+  def destroy
+    circle = Circle.find(params[:id])
+
+    status = circle.destroy ? :no_content : :not_found
+    head status
+  end
+
   private
 
   def circle_params
