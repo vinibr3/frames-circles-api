@@ -1,0 +1,9 @@
+json.id circle.id
+json.frame_id circle.frame_id
+json.x circle.x
+json.y circle.y
+json.radius circle.radius
+json.geometry circle.geometry
+json.diameter circle.diameter
+json.created_at circle.created_at
+json.updated_at circle.updated_at

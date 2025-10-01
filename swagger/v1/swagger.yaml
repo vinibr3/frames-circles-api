@@ -4,7 +4,11 @@ info:
   version: v1
 servers:
   - url: http://localhost:3013
+
 paths:
+  # Frames
+  "/api/v1/frames":
+    $ref: "./frames/listing-create.yaml"
 
 components:
   schemas:

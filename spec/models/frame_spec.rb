@@ -22,6 +22,7 @@ RSpec.describe Frame, type: :model do
   it { is_expected.to belong_to(:lowest_circle).class_name('Circle').optional }
   it { is_expected.to belong_to(:rightest_circle).class_name('Circle').optional }
   it { is_expected.to belong_to(:leftest_circle).class_name('Circle').optional }
+  it { is_expected.to accept_nested_attributes_for(:circles) }
 
   context 'before validation' do
     let(:frame) { build(:frame, geometry: nil) }

@@ -13,6 +13,8 @@ class Circle < ApplicationRecord
                        numericality: { greater_than: 0 }
   validates :geometry, presence: true
 
+  private
+
   def assigns_attributes
     self.radius = self.diameter / 2.0 if diameter.present?
     self.geometry = "((#{x},#{y}),#{radius})" if [x, y, radius].all?(&:present?)

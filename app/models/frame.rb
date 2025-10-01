@@ -30,6 +30,8 @@ class Frame < ApplicationRecord
   validates :leftest_circle, presence: true,
                              if: proc { circles_count.positive? }
 
+  accepts_nested_attributes_for :circles, reject_if: :all_blank
+
   private
 
   def assigns_attribute_geometry_with_oposits_vertexs_of_frame
