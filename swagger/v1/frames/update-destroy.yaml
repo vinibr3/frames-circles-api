@@ -1,0 +1,25 @@
+delete:
+  summary: Delete a frame
+  tags:
+    - Frames
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      description: ID of frame to delete
+  responses:
+    "204":
+      description: No Content
+    "422":
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              errors:
+                circles:
+                  - 'estão inseridos'
+              messages:
+                - 'Círculos estão inseridos'

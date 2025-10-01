@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :frames, only: %i[create] do
+      resources :frames, only: %i[create destroy] do
         resources :circles, only: %i[create], controller: 'frames/circles'
       end
       resources :circles, only: %i[update destroy]

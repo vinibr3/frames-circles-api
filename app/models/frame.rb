@@ -12,6 +12,9 @@ class Frame < ApplicationRecord
 
   before_validation :assigns_attribute_geometry_with_oposits_vertexs_of_frame
 
+  before_destroy :add_error_present_circles, prepend: true,
+                                             if: proc { circles_count.positive? }
+
   validates :x, presence: true,
                 numericality: true
   validates :y, presence: true,
@@ -43,5 +46,10 @@ class Frame < ApplicationRecord
     right_vertex_y = y + height / 2.0
 
     self.geometry = "((#{left_vertex_x},#{left_vertex_y}),(#{right_vertex_x},#{right_vertex_y}))"
+  end
+
+  def add_error_present_circles
+    errors.add(:circles, :present)
+    throw :abort
   end
 end

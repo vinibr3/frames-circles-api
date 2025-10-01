@@ -52,4 +52,39 @@ RSpec.describe Api::V1::FramesController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE destroy' do
+    let(:frame) { create(:frame) }
+    let(:params) { { id: frame.id } }
+
+    it 'removes frame' do
+      frame
+
+      expect{ delete :destroy, params: params }
+        .to change { Frame.count }.by(-1)
+    end
+
+    it 'response have http status 204' do
+      delete :destroy, params: params
+
+      expect(response).to have_http_status(:no_content)
+    end
+
+    context 'with frame having circles' do
+      let(:frame) { create(:circle).frame }
+
+      before { delete :destroy, params: params }
+
+      it 'renders present circles error' do
+        body = JSON.parse(response.body)
+
+        expect(body).to eq({ errors: { circles: ['estão inseridos'] },
+                             messages: ['Círculos estão inseridos'] }.as_json)
+      end
+
+      it 'response have http status 422' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
 end

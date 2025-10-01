@@ -6,6 +6,11 @@ pt-BR:
         restrict_dependent_destroy:
           has_one: Não é possível excluir o registro pois existe um %{record} dependente
           has_many: Não é possível excluir o registro pois existem %{record} dependentes
+      models:
+        frame:
+          attributes:
+            circles:
+              present: estão inseridos
     models:
       frame: Quadro
       circle: Circulo
@@ -22,6 +27,7 @@ pt-BR:
         leftest_circle: Círculo mais a esquerda
         created_at: Data de Criação
         updated_at: Data de Atualização
+        circles: Círculos
       circle:
         x: Ponto central no eixo x
         y: Ponto central no eixo y
