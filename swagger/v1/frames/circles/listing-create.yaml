@@ -1,0 +1,72 @@
+post:
+  summary: Creates a new circle
+  tags:
+    - Frames
+  parameters:
+    - in: path
+      name: frame_id
+      schema:
+        type: integer
+      description: Frame ID to insert new circle
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          example:
+            circle:
+              x: 5.25
+              y: 5.25
+              diameter: 2.25
+
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+          type: object
+          example:
+            id: 1
+            frame_id: 2
+            x: 10.25
+            y: 10.25
+            diameter: 2.25
+            radius: 1.125
+            geometry: "((10.25,10.25),1.125)"
+            created_at: "2025-10-01T01:00:07.370Z"
+            updated_at: "2025-10-01T01:00:07.370Z"
+
+    "422":
+      description: Erro na validação dos dados
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              errors:
+                x:
+                  - 'não pode ficar em branco'
+                  -  'não é um número'
+                y:
+                  - 'não pode ficar em branco'
+                  - 'não é um número'
+                radius:
+                  - 'não pode ficar em branco'
+                  - 'não é um número'
+                diameter:
+                  - 'não pode ficar em branco'
+                  - 'não é um número'
+                geometry:
+                  - 'não pode ficar em branco'
+              messages:
+                - 'Ponto central no eixo x não pode ficar em branco'
+                - 'Ponto central no eixo x não é um número'
+                - 'Ponto central no eixo y não pode ficar em branco'
+                - 'Ponto central no eixo y não é um número'
+                - 'Raio não pode ficar em branco'
+                - 'Raio não é um número'
+                - 'Diâmetro não pode ficar em branco'
+                - 'Diâmetro não é um número'
+                - 'Representação geométrica não pode ficar em branco'
