@@ -1,6 +1,48 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::FramesController, type: :controller do
+  describe 'GET show' do
+    let(:frame) { create(:frame) }
+    let(:circle) { create(:circle, frame: frame) }
+    let(:body) { JSON.parse(response.body) }
+
+    before do
+      circle
+      get :show, params: { id: frame.id }, as: :json
+    end
+
+    it 'returns serialized frame' do
+      circle_attributes = { id: circle.id,
+                            frame_id: frame.id,
+                            x: circle.x.to_f,
+                            y: circle.y.to_f,
+                            diameter: circle.diameter.to_f,
+                            radius: circle.radius.to_f,
+                            geometry: "<(#{circle.x},#{circle.y}),#{circle.radius}>",
+                            created_at: circle.created_at,
+                            updated_at: circle.updated_at }
+
+      left_vertex_x = frame.x - frame.width / 2.0
+      left_vertex_y = frame.y - frame.height / 2.0
+      right_vertex_x = frame.x + frame.width / 2.0
+      right_vertex_y = frame.y + frame.height / 2.0
+
+      expect(body).to eq({ id: frame.id,
+                           x: frame.x.to_f,
+                           y: frame.y.to_f,
+                           width: frame.width.to_f,
+                           height: frame.height.to_f,
+                           geometry: "(#{right_vertex_x},#{right_vertex_y}),(#{left_vertex_x},#{left_vertex_y})",
+                           circles_count: frame.circles_count,
+                           created_at: frame.created_at,
+                           updated_at: frame.updated_at,
+                           highest_circle: circle_attributes,
+                           lowest_circle: circle_attributes,
+                           rightest_circle: circle_attributes,
+                           leftest_circle: circle_attributes}.as_json)
+    end
+  end
+
   describe 'POST create' do
     let(:frame_params) { attributes_for(:frame) }
     let(:circle_params) { attributes_for(:circle) }

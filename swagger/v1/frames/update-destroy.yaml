@@ -1,3 +1,71 @@
+get:
+  summary: Get a frame
+  tags:
+    - Frames
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      description: ID of frame to get
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+          type: object
+          example:
+            id: 1
+            x: 10.25
+            y: 10.25
+            width: 9.10
+            height: 9.10
+            geometry: "((5.7,5.7),(14.8,14.8))"
+            circles_count: 1
+            created_at: "2025-10-01T01:00:07.370Z"
+            updated_at: "2025-10-01T01:00:07.370Z"
+            highest_circle:
+              id: 1
+              frame_id: 1
+              x: 10.25
+              y: 10.25
+              diameter: 2.25
+              radius: 1.125
+              geometry: "((10.25,10.25),1.125)"
+              created_at: "2025-10-01T01:00:07.370Z"
+              updated_at: "2025-10-01T01:00:07.370Z"
+            lowest_circle:
+              id: 1
+              frame_id: 1
+              x: 10.25
+              y: 10.25
+              diameter: 2.25
+              radius: 1.125
+              geometry: "((10.25,10.25),1.125)"
+              created_at: "2025-10-01T01:00:07.370Z"
+              updated_at: "2025-10-01T01:00:07.370Z"
+            rightest_circle:
+              id: 1
+              frame_id: 1
+              x: 10.25
+              y: 10.25
+              diameter: 2.25
+              radius: 1.125
+              geometry: "((10.25,10.25),1.125)"
+              created_at: "2025-10-01T01:00:07.370Z"
+              updated_at: "2025-10-01T01:00:07.370Z"
+            leftest_circle:
+              id: 1
+              frame_id: 1
+              x: 10.25
+              y: 10.25
+              diameter: 2.25
+              radius: 1.125
+              geometry: "((10.25,10.25),1.125)"
+              created_at: "2025-10-01T01:00:07.370Z"
+              updated_at: "2025-10-01T01:00:07.370Z"
+
 delete:
   summary: Delete a frame
   tags:

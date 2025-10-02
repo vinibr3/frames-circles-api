@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class Api::V1::FramesController < ApplicationController
+  def show
+    @frame = Frame.find(params[:id])
+  end
+
   def create
     @frame = Frame.new(frame_params)
 
