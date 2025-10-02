@@ -33,7 +33,11 @@ class Frame < ApplicationRecord
   validates :leftest_circle, presence: true,
                              if: proc { circles_count.positive? }
 
+  validate :do_not_overlap_other_frame
+
   accepts_nested_attributes_for :circles, reject_if: :all_blank
+
+  scope :overlap, ->(geometry) { where('frames.geometry && ?', geometry) }
 
   private
 
@@ -51,5 +55,9 @@ class Frame < ApplicationRecord
   def add_error_present_circles
     errors.add(:circles, :present)
     throw :abort
+  end
+
+  def do_not_overlap_other_frame
+    errors.add(:geometry, :overlap) if Frame.overlap(geometry).exists?
   end
 end

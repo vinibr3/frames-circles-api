@@ -169,6 +169,7 @@ pt-BR:
       wrong_length:
         one: não possui o tamanho esperado (%{count} caracter)
         other: não possui o tamanho esperado (%{count} caracteres)
+      overlap: tem sobreposição
     template:
       body: 'Por favor, verifique o(s) seguinte(s) campo(s):'
       header:

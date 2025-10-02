@@ -39,11 +39,25 @@ RSpec.describe Frame, type: :model do
   end
 
   context 'when frame has circles' do
-    subject { create(:circle).frame }
+    subject { build(:frame, circles_count: 1) }
 
     it { is_expected.to validate_presence_of(:highest_circle) }
     it { is_expected.to validate_presence_of(:lowest_circle) }
     it { is_expected.to validate_presence_of(:rightest_circle) }
     it { is_expected.to validate_presence_of(:leftest_circle) }
+  end
+
+  context 'when validate' do
+    context 'with frame overlaping' do
+      let(:frame) { build(:frame, x: 1, y: 1, width: 1, height: 1) }
+
+      before { create(:frame, x: 0, y: 0, width: 2, height: 2) }
+
+      it "atribute 'geometry' has overlap error message" do
+        frame.valid?
+
+        expect(frame.errors.full_messages).to include('Representação geométrica tem sobreposição')
+      end
+    end
   end
 end
