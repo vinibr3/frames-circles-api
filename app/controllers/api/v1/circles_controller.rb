@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 class Api::V1::CirclesController < ApplicationController
+  def index
+    geometry =
+      "<(#{params.require(:center_x)},#{params.require(:center_y)}),#{params.require(:radius)}>"
+
+    @circles = Circle.contained(geometry)
+                     .by_frame(params[:frame_id])
+  end
+
   def update
     @circle = Circle.find(params[:id])
 

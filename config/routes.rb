@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       resources :frames, only: %i[create destroy show] do
         resources :circles, only: %i[create], controller: 'frames/circles'
       end
-      resources :circles, only: %i[update destroy]
+      resources :circles, only: %i[index update destroy]
     end
   end
 end

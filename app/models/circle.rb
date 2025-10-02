@@ -23,6 +23,8 @@ class Circle < ApplicationRecord
     -> { select("MAX(y) AS max_y, MIN(y) AS min_y, MAX(x) AS max_x, MIN(x) AS min_x") }
 
   scope :overlap, ->(geometry) { where('circles.geometry && ?', geometry) }
+  scope :contained, ->(geometry) { where('circles.geometry <@ ?', geometry) }
+  scope :by_frame, ->(frame_id) { where(frame_id: frame_id) if frame_id.present? }
 
   private
 

@@ -1,0 +1,43 @@
+get:
+  summary: Get a list of circles
+  tags:
+    - Circles
+  parameters:
+    - in: query
+      name: center_x
+      schema:
+        type: decimal
+      description: Center on X axis from area to search circles
+    - in: query
+      name: center_y
+      schema:
+        type: decimal
+      description: Center on Y axis from area to search circles
+    - in: query
+      name: radius
+      schema:
+        type: decimal
+      description: Radius from area to search circles
+    - in: query
+      name: frame_id
+      schema:
+        type: integer
+      description: ID of frame to filter circles by frame
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+          type: object
+          example:
+            circles:
+              - id: 1
+                frame_id: 2
+                x: 10.25
+                y: 10.25
+                diameter: 2.25
+                radius: 1.125
+                geometry: "((10.25,10.25),1.125)"
+                created_at: "2025-10-01T01:00:07.370Z"
+                updated_at: "2025-10-01T01:00:07.370Z"
