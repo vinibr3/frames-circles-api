@@ -17,8 +17,12 @@ class Circle < ApplicationRecord
                        numericality: { greater_than: 0 }
   validates :geometry, presence: true
 
+  validate :circle_do_not_overlap_other_circle_inside_same_frame
+
   scope :boundry_positions,
     -> { select("MAX(y) AS max_y, MIN(y) AS min_y, MAX(x) AS max_x, MIN(x) AS min_x") }
+
+  scope :overlap, ->(geometry) { where('circles.geometry && ?', geometry) }
 
   private
 
@@ -51,5 +55,12 @@ class Circle < ApplicationRecord
 
   def available_circles
     frame.circles.where.not(id: id)
+  end
+
+  def circle_do_not_overlap_other_circle_inside_same_frame
+    errors.add(:geometry, :overlap) if Circle.where.not(id: id)
+                                             .where(frame_id: frame_id)
+                                             .overlap(geometry)
+                                             .exists?
   end
 end

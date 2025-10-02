@@ -8,14 +8,14 @@ RSpec.describe Api::V1::Frames::CirclesController, type: :controller do
 
     let(:body) { JSON.parse(response.body) }
 
-    before { post :create, params: params, as: :json }
-
     it 'creates circle on frame' do
       expect{ post :create, params: params, as: :json }
-        .to change{ frame.reload.circles.count }.by(1)
+        .to change{ frame.reload.circles_count }.by(1)
     end
 
     it 'returns circle rendered' do
+      post :create, params: params, as: :json
+
       circle = Circle.first
 
       expect(body).to include({ id: circle.id,
@@ -32,6 +32,8 @@ RSpec.describe Api::V1::Frames::CirclesController, type: :controller do
     context 'when params are invalids' do
       let(:params) { { circle: { x: '', y: '', diameter: '' },
                        frame_id: frame.id } }
+
+      before { post :create, params: params, as: :json }
 
       it 'returns errors' do
         expect(body).to eq({ errors: { x: ['não pode ficar em branco', 'não é um número'],

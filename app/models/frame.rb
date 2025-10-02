@@ -58,6 +58,8 @@ class Frame < ApplicationRecord
   end
 
   def do_not_overlap_other_frame
-    errors.add(:geometry, :overlap) if Frame.overlap(geometry).exists?
+    errors.add(:geometry, :overlap) if Frame.where.not(id: id)
+                                            .overlap(geometry)
+                                            .exists?
   end
 end

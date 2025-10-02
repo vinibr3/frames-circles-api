@@ -97,4 +97,18 @@ RSpec.describe Circle, type: :model do
       end
     end
   end
+
+  context 'when validate' do
+    context 'with circle overlaping inside same frame' do
+      let(:frame) { create(:frame) }
+      let(:circle) { build(:circle, frame: frame, x: 2, y: 0, diameter: 2) }
+
+      it "atribute 'geometry' has overlap error message" do
+        create(:circle, frame: frame, x: 0, y: 0, diameter: 2)
+        circle.valid?
+
+        expect(circle.errors.full_messages).to include('Representação geométrica tem sobreposição')
+      end
+    end
+  end
 end
