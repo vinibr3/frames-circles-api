@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_30_202809) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_02_030037) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -24,6 +24,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_30_202809) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["frame_id"], name: "index_circles_on_frame_id"
+    t.index ["x"], name: "index_circles_on_x"
+    t.index ["y"], name: "index_circles_on_y"
   end
 
   create_table "frames", force: :cascade do |t|
