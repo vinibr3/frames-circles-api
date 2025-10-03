@@ -35,10 +35,12 @@ class Circle < ApplicationRecord
   end
 
   def update_positional_circles_of_frame
-    frame.highest_circle = [frame.highest_circle, self].compact.sort_by(&:y).last
-    frame.lowest_circle = [frame.lowest_circle, self].compact.sort_by(&:y).first
-    frame.rightest_circle = [frame.rightest_circle, self].compact.sort_by(&:x).last
-    frame.leftest_circle = [frame.leftest_circle, self].compact.sort_by(&:x).first
+    positions = frame.circles.boundry_positions[0]
+
+    frame.highest_circle = frame.circles.find_by(y: positions.max_y)
+    frame.lowest_circle = frame.circles.find_by(y: positions.min_y)
+    frame.rightest_circle = frame.circles.find_by(x: positions.max_x)
+    frame.leftest_circle = frame.circles.find_by(x: positions.min_x)
 
     frame.save!
   end
