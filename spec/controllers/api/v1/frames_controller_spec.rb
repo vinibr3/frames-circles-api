@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::FramesController, type: :controller do
   describe 'GET show' do
-    let(:frame) { create(:frame) }
+    let(:frame) { create(:frame, width: 1_000_000_000, height: 1_000_000_000) }
     let(:circle) { create(:circle, frame: frame) }
     let(:body) { JSON.parse(response.body) }
 
@@ -44,7 +44,8 @@ RSpec.describe Api::V1::FramesController, type: :controller do
   end
 
   describe 'POST create' do
-    let(:frame_params) { attributes_for(:frame) }
+    let(:frame_params) {
+      attributes_for(:frame).merge(width: 1_000_000_000, height: 1_000_000_000) }
     let(:circle_params) { attributes_for(:circle) }
     let(:params) { { frame: { x: frame_params[:x],
                               y: frame_params[:y],

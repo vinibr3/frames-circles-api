@@ -18,6 +18,7 @@ class Circle < ApplicationRecord
   validates :geometry, presence: true
 
   validate :circle_do_not_overlap_other_circle_inside_same_frame
+  validate :circle_contained_on_frame
 
   scope :boundry_positions,
     -> { select("MAX(y) AS max_y, MIN(y) AS min_y, MAX(x) AS max_x, MIN(x) AS min_x") }
@@ -64,5 +65,26 @@ class Circle < ApplicationRecord
                                              .where(frame_id: frame_id)
                                              .overlap(geometry)
                                              .exists?
+  end
+
+  def circle_contained_on_frame
+    variables = [y, x, radius, frame.try(:x), frame.try(:y), frame.try(:height), frame.try(:width)]
+    return if variables.any?(&:blank?)
+
+    circle_max_y = y + radius
+    circle_min_y = y - radius
+    circle_max_x = x + radius
+    circle_min_x = x - radius
+    frame_max_y = frame.y + frame.height / 2.0
+    frame_min_y = frame.y - frame.height / 2.0
+    frame_max_x = frame.x + frame.width / 2.0
+    frame_min_x = frame.x - frame.width / 2.0
+
+    return if circle_max_y <= frame_max_y &&
+              circle_min_y >= frame_min_y &&
+              circle_max_x <= frame_max_x &&
+              circle_min_x >= frame_min_x
+
+    errors.add(:geometry, :out_frame)
   end
 end

@@ -40,11 +40,11 @@ RSpec.describe Circle, type: :model do
                                  rightest_circle: nil,
                                  leftest_circle: nil) }
 
-    it 'update positional circles of frame' do
-      highest_circle = create(:circle, frame: frame, x: 0, y: 5, diameter: 1)
-      lowest_circle = create(:circle, frame: frame, x: 0, y: -5, diameter: 1)
-      rightest_circle = create(:circle, frame: frame, x: 5, y: 0, diameter: 1)
-      leftest_circle = create(:circle, frame: frame, x: -5, y: 0, diameter: 1)
+    it 'updates positional circles of frame' do
+      highest_circle = create(:circle, frame: frame, x: frame.x, y: frame.y + 2, diameter: 1)
+      lowest_circle = create(:circle, frame: frame, x: frame.x, y: frame.y - 2, diameter: 1)
+      rightest_circle = create(:circle, frame: frame, x: frame.x + 2, y: frame.y, diameter: 1)
+      leftest_circle = create(:circle, frame: frame, x: frame.x - 2, y: frame.y, diameter: 1)
 
       positional_circles_of_frame =
         [frame.reload.highest_circle, frame.lowest_circle, frame.rightest_circle, frame.leftest_circle]
@@ -58,11 +58,11 @@ RSpec.describe Circle, type: :model do
     let(:frame) { create(:frame) }
 
     it 'destroy positional circles of frame' do
-      highest_circle = create(:circle, frame: frame, x: 0, y: 5, diameter: 1)
-      lowest_circle = create(:circle, frame: frame, x: 0, y: -5, diameter: 1)
-      rightest_circle = create(:circle, frame: frame, x: 5, y: 0, diameter: 1)
-      leftest_circle = create(:circle, frame: frame, x: -5, y: 0, diameter: 1)
-      centerest_circle = create(:circle, frame: frame, x: 0, y: 0, diameter: 1)
+      highest_circle = create(:circle, frame: frame, x: frame.x, y: frame.y + 5, diameter: 1)
+      lowest_circle = create(:circle, frame: frame, x: frame.x, y: frame.y - 5, diameter: 1)
+      rightest_circle = create(:circle, frame: frame, x: frame.x + 5, y: frame.y, diameter: 1)
+      leftest_circle = create(:circle, frame: frame, x: frame.x - 5, y: frame.y, diameter: 1)
+      centerest_circle = create(:circle, frame: frame, x: frame.x, y: frame.y, diameter: 1)
 
       frame.update!(highest_circle: highest_circle,
                     lowest_circle: lowest_circle,
@@ -81,7 +81,7 @@ RSpec.describe Circle, type: :model do
       let(:frame) { create(:frame) }
 
       it 'destroy positional circles of frame' do
-        circle = create(:circle, frame: frame, x: 0, y: 0, diameter: 1)
+        circle = create(:circle, frame: frame, x: frame.x, y: frame.y, diameter: 1)
 
         frame.update!(highest_circle: circle,
                       lowest_circle: circle,
@@ -101,13 +101,24 @@ RSpec.describe Circle, type: :model do
   context 'when validate' do
     context 'with circle overlaping inside same frame' do
       let(:frame) { create(:frame) }
-      let(:circle) { build(:circle, frame: frame, x: 2, y: 0, diameter: 2) }
+      let(:circle) { build(:circle, frame: frame, x: frame.x, y: frame.y, diameter: 10) }
 
       it "atribute 'geometry' has overlap error message" do
-        create(:circle, frame: frame, x: 0, y: 0, diameter: 2)
+        create(:circle, frame: frame, x: frame.x, y: frame.y, diameter: 10)
         circle.valid?
 
         expect(circle.errors.full_messages).to include('Representação geométrica tem sobreposição')
+      end
+    end
+
+    context 'with circle do not contained on frame' do
+      let(:frame) { build(:frame, width: 1, height: 1) }
+      let(:circle) { build(:circle, frame: frame, diameter: 1) }
+
+      it "atribute 'geometry' has out_frame error message" do
+        circle.valid?
+
+        expect(circle.errors.full_messages).to include('Representação geométrica não está contida no quadro')
       end
     end
   end

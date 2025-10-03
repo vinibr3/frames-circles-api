@@ -36,6 +36,14 @@ pt-BR:
         geometry: Representação geométrica
         created_at: Data de Criação
         updated_at: Data de Atualização
+      frame/circles:
+        x: Ponto central no eixo x
+        y: Ponto central no eixo y
+        radius: Raio
+        diameter: Diâmetro
+        geometry: Representação geométrica
+        created_at: Data de Criação
+        updated_at: Data de Atualização
   date:
     abbr_day_names:
     - dom
@@ -170,6 +178,7 @@ pt-BR:
         one: não possui o tamanho esperado (%{count} caracter)
         other: não possui o tamanho esperado (%{count} caracteres)
       overlap: tem sobreposição
+      out_frame: não está contida no quadro
     template:
       body: 'Por favor, verifique o(s) seguinte(s) campo(s):'
       header:

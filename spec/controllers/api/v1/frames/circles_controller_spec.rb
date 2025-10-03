@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::Frames::CirclesController, type: :controller do
   describe 'POST create' do
-    let(:frame) { create(:frame) }
+    let(:frame) { create(:frame, width: 1_000_000_000, height: 1_000_000_000) }
     let(:circle_params) { attributes_for(:circle).slice(:x, :y, :diameter) }
     let(:params) { { circle: circle_params, frame_id: frame.id } }
 
